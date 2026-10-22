@@ -1,6 +1,10 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useState, type CSSProperties, type ReactNode } from 'react'
 import { education, profile, projects, stack, studies, work } from './content'
 import portrait from './portrait.jpg'
+import { Phone } from './Screens'
+
+const showcase = projects.filter((p) => p.screen || p.screenshot)
+const moreProjects = projects.filter((p) => !p.screen && !p.screenshot)
 
 type Theme = 'light' | 'dark'
 
@@ -36,10 +40,33 @@ function useLocalTime(timeZone: string) {
   return time
 }
 
+function useReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll('[data-reveal]')
+    if (!('IntersectionObserver' in window)) {
+      els.forEach((el) => el.classList.add('in'))
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in')
+            io.unobserve(entry.target)
+          }
+        }
+      },
+      { rootMargin: '0px 0px -8% 0px' },
+    )
+    els.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [])
+}
+
 function Section({ id, index, title, children }: { id: string; index: string; title: string; children: ReactNode }) {
   return (
     <section id={id} className="section" aria-labelledby={`${id}-title`}>
-      <header className="section-head">
+      <header className="section-head" data-reveal>
         <span className="mono muted">{index}</span>
         <h2 id={`${id}-title`}>{title}</h2>
       </header>
@@ -51,6 +78,7 @@ function Section({ id, index, title, children }: { id: string; index: string; ti
 export default function App() {
   const [theme, toggleTheme] = useTheme()
   const time = useLocalTime(profile.timeZone)
+  useReveal()
 
   return (
     <div className="page">
@@ -80,8 +108,8 @@ export default function App() {
           </dl>
 
           <nav className="toc mono" aria-label="Sections">
-            <a href="#work">01 Work</a>
-            <a href="#projects">02 Projects</a>
+            <a href="#projects">01 Selected work</a>
+            <a href="#work">02 Experience</a>
             <a href="#stack">03 Stack</a>
             <a href="#education">04 Education</a>
             <a href="#contact">05 Contact</a>
@@ -99,13 +127,75 @@ export default function App() {
       </aside>
 
       <main className="content">
-        <p className="lede">
-          I build software that has to keep up with the real world: live camera feeds, moving maps, wearables streaming
-          vitals. Mostly in <em>Flutter</em>, increasingly in <em>React</em>, with enough backend to make the two meet.
-          Right now that means a surveillance platform at Etimad in Abu Dhabi.
+        <h2 className="lede" data-reveal>
+          Software that keeps up with the <em>real world.</em>
+        </h2>
+        <p className="lede-sub" data-reveal style={{ '--delay': '0.15s' } as CSSProperties}>
+          Live camera feeds, moving maps, wearables streaming vitals. I build them mostly in Flutter, increasingly in
+          React, with enough backend to make the two meet. Right now that means a surveillance platform at Etimad in Abu
+          Dhabi.
         </p>
 
-        <Section id="work" index="01" title="Work">
+        <Section id="projects" index="01" title="Selected work">
+          <ol className="showcase">
+            {showcase.map((project, i) => (
+              <li
+                key={project.name}
+                className="shot"
+                data-reveal
+                style={{ '--delay': `${i * 0.12}s` } as CSSProperties}
+              >
+                <div className="plate">
+                  <span className="mono plate-index">{String(i + 1).padStart(2, '0')}</span>
+                  <Phone project={project} />
+                </div>
+                <div className="shot-text">
+                  <p className="mono muted">{project.kind}</p>
+                  <h3>{project.name}</h3>
+                  <p>{project.summary}</p>
+                  <p className="mono muted tags">{project.stack.join(', ')}</p>
+                  {project.links && (
+                    <p className="mono shot-links">
+                      {project.links.map((link) => (
+                        <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
+                          {link.label} ↗
+                        </a>
+                      ))}
+                    </p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <h3 className="subhead mono muted">More projects</h3>
+          <ol className="projects">
+            {moreProjects.map((project, i) => (
+              <li key={project.name} className="project" data-reveal>
+                <span className="mono muted">{String(showcase.length + i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3>{project.name}</h3>
+                  <p>{project.summary}</p>
+                  <p className="mono muted tags">
+                    {project.kind} · {project.stack.join(', ')}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <h3 className="subhead mono muted">Practice work, AI/ML course</h3>
+          <ul className="studies">
+            {studies.map((s) => (
+              <li key={s.name}>
+                <span>{s.name}</span>
+                <span className="muted">{s.note}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section id="work" index="02" title="Experience">
           <ol className="rows">
             {work.map((job) => (
               <li key={job.company}>
@@ -132,33 +222,6 @@ export default function App() {
               </li>
             ))}
           </ol>
-        </Section>
-
-        <Section id="projects" index="02" title="Projects">
-          <ol className="projects">
-            {projects.map((project, i) => (
-              <li key={project.name} className="project">
-                <span className="mono muted">{String(i + 1).padStart(2, '0')}</span>
-                <div>
-                  <h3>{project.name}</h3>
-                  <p>{project.summary}</p>
-                  <p className="mono muted tags">
-                    {project.kind} · {project.stack.join(', ')}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
-
-          <h3 className="subhead mono muted">Practice work, AI/ML course</h3>
-          <ul className="studies">
-            {studies.map((s) => (
-              <li key={s.name}>
-                <span>{s.name}</span>
-                <span className="muted">{s.note}</span>
-              </li>
-            ))}
-          </ul>
         </Section>
 
         <Section id="stack" index="03" title="Stack">

@@ -58,27 +58,44 @@ export const work: Job[] = [
   },
 ]
 
+export type Screen = 'pos' | 'ble' | 'ge'
+
 export type Project = {
   name: string
   kind: string
   summary: string
   stack: string[]
+  // Drawn placeholder shown in the phone frame until a real screenshot is set.
+  screen?: Screen
+  // Path under public/, e.g. '/screens/pos.png'. Replaces the drawn screen.
+  screenshot?: string
+  links?: { label: string; href: string }[]
 }
 
 export const projects: Project[] = [
   {
-    name: 'German Experts app suite',
-    kind: 'Mobile',
+    name: 'POS for cashiers and waiters',
+    kind: 'Android · phone and tablet',
     summary:
-      'The customer apps for a car service group, covering loyalty, rentals, recovery, sales and service history. Live on iOS and Android.',
-    stack: ['Flutter', 'Figma', 'REST'],
+      'One point-of-sale app that handles both cashier and waiter roles on Android phones and tablets. Windows client is next.',
+    stack: ['Flutter', 'Android'],
+    screen: 'pos',
   },
   {
     name: 'BLE Communicator',
-    kind: 'Mobile',
+    kind: 'iOS and Android',
     summary:
       'A Whoop-style companion app that streams live blood pressure readings from a Bluetooth Low Energy wearable. Uses Pigeon for type-safe native channels.',
     stack: ['Flutter', 'BLE', 'Pigeon'],
+    screen: 'ble',
+  },
+  {
+    name: 'German Experts app suite',
+    kind: 'App Store and Google Play',
+    summary:
+      'The customer apps for a car service group, covering loyalty, rentals, recovery, sales and service history. Designed in Figma, built in Flutter.',
+    stack: ['Flutter', 'Figma', 'REST'],
+    screen: 'ge',
   },
   {
     name: 'Doctor Dashboard',
@@ -86,13 +103,6 @@ export const projects: Project[] = [
     summary:
       'A patient and records system I built on my own end to end: data model, Django REST API, PostgreSQL and a React dashboard.',
     stack: ['Django', 'PostgreSQL', 'React'],
-  },
-  {
-    name: 'POS for cashiers and waiters',
-    kind: 'Tablet',
-    summary:
-      'One point-of-sale app that handles both cashier and waiter roles on Android phones and tablets. Windows client is next.',
-    stack: ['Flutter', 'Android'],
   },
   {
     name: 'Business websites',
