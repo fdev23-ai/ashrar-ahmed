@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ashrar Ahmed — Software developer, Flutter & React</title>
+    <meta name="description" content="Ashrar Ahmed, software developer in Abu Dhabi building real-time apps with Flutter and React." />
+    <meta name="author" content="Ashrar Ahmed" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Ashrar Ahmed — Software developer" />
+    <meta property="og:description" content="Real-time apps with Flutter and React: live video, maps, wearables." />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap"
+    />
+    <script>
+      (function () {
+        var t
+        try { t = localStorage.getItem('theme') } catch (e) {}
+        if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        document.documentElement.dataset.theme = t
+      })()
+    </script>
+  </head>
+  <body id="top">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
