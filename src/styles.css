@@ -13,7 +13,7 @@
   --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
   --serif: 'Newsreader', ui-serif, Georgia, serif;
 
-  --gutter: clamp(16px, 4vw, 48px);
+  --gutter: clamp(16px, 4vw, 80px);
   color-scheme: light;
 }
 
@@ -103,9 +103,9 @@ a:hover {
 
 .page {
   display: grid;
-  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
-  gap: clamp(32px, 6vw, 96px);
-  max-width: 1180px;
+  grid-template-columns: minmax(240px, 340px) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 128px);
+  max-width: 1680px;
   margin: 0 auto;
   padding: 0 var(--gutter);
 }
@@ -365,7 +365,7 @@ a:hover {
 
 .phone {
   width: 100%;
-  max-width: 240px;
+  max-width: 340px;
   padding: 7px;
   border-radius: 30px;
   background: #1b1b19;
@@ -776,7 +776,7 @@ a:hover {
   max-width: 22ch;
   padding-top: 96px;
   font-family: var(--serif);
-  font-size: clamp(34px, 4.6vw, 60px);
+  font-size: clamp(34px, 4.6vw, 84px);
   font-weight: 300;
   line-height: 1.08;
   letter-spacing: -0.02em;
@@ -913,5 +913,19 @@ a:hover {
 
   .plate .phone {
     transition: none;
+  }
+}
+
+@media (min-width: 1500px) {
+  .portrait {
+    width: 112px;
+  }
+
+  .showcase {
+    gap: 32px;
+  }
+
+  .shot-text > p:not(.mono) {
+    font-size: 16px;
   }
 }
