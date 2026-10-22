@@ -1,7 +1,7 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from 'react'
-import { education, profile, projects, stack, studies, work } from './content'
+import { education, etimadProjects, profile, projects, stack, studies, work } from './content'
 import portrait from './portrait.jpg'
-import { Phone } from './Screens'
+import { Desktop, Phone } from './Screens'
 
 const showcase = projects.filter((p) => p.screen || p.screenshot)
 const moreProjects = projects.filter((p) => !p.screen && !p.screenshot)
@@ -38,6 +38,31 @@ function useLocalTime(timeZone: string) {
   }, [timeZone])
 
   return time
+}
+
+function PlatformIcon({ platform }: { platform: string }) {
+  const common = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' } as const
+  if (platform === 'C#')
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden {...common}>
+        <rect x="4" y="4" width="16" height="7" rx="1.5" />
+        <rect x="4" y="13" width="16" height="7" rx="1.5" />
+        <path d="M8 7.5h.01M8 16.5h.01" />
+      </svg>
+    )
+  if (platform === 'Flutter')
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden {...common}>
+        <rect x="7" y="3" width="10" height="18" rx="2" />
+        <path d="M11 18h2" />
+      </svg>
+    )
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden {...common}>
+      <rect x="3" y="4" width="18" height="12" rx="1.5" />
+      <path d="M9 20h6M12 16v4" />
+    </svg>
+  )
 }
 
 function useReveal() {
@@ -137,6 +162,32 @@ export default function App() {
         </p>
 
         <Section id="projects" index="01" title="Selected work">
+          <h3 className="subhead mono muted etimad-head">At Etimad · product names withheld</h3>
+          <div className="etimad-plate" data-reveal>
+            <Desktop />
+          </div>
+          <ol className="projects">
+            {etimadProjects.map((project) => (
+              <li key={project.title} className="project" data-reveal>
+                <span className="mono platform">
+                  <PlatformIcon platform={project.platform} />
+                  {project.platform}
+                </span>
+                <div>
+                  <h3>{project.title}</h3>
+                  <p>{project.summary}</p>
+                  <ul className="points">
+                    {project.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                  <p className="mono muted tags">{project.stack.join(', ')}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <h3 className="subhead mono muted">Apps</h3>
           <ol className="showcase">
             {showcase.map((project, i) => (
               <li

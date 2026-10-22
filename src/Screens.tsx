@@ -134,3 +134,63 @@ export function Phone({ project }: { project: Project }) {
     </div>
   )
 }
+
+export function Desktop() {
+  return (
+    <div className="desktop" aria-hidden>
+      <div className="desk-screen">
+        <div className="desk-bar">
+          <span className="desk-dots">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span className="desk-url">Operations console</span>
+        </div>
+        <div className="desk-body">
+          <aside className="desk-side">
+            <p className="desk-label">Layers</p>
+            {['Cameras', 'Radar', 'Zones', 'Targets'].map((layer, i) => (
+              <p key={layer} className="desk-layer">
+                <i className={i < 3 ? 'on' : ''} />
+                {layer}
+              </p>
+            ))}
+            <p className="desk-label">Devices</p>
+            {['Gate camera', 'North radar', 'Perimeter camera', 'Lobby camera'].map((d, i) => (
+              <p key={d} className="desk-device">
+                <span>{d}</span>
+                <b className={i === 2 ? 'warn' : ''} />
+              </p>
+            ))}
+          </aside>
+          <div className="desk-map">
+            <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+              <path className="road" d="M0 190 C80 170 140 210 220 170 S340 120 400 140" />
+              <path className="road" d="M120 0 C130 80 110 160 150 260" />
+              <polygon className="zone" points="190,40 300,30 330,110 230,130" />
+              <polygon className="zone alt" points="40,60 120,50 110,120 30,130" />
+              <path className="cone" d="M250 200 L200 140 A70 70 0 0 1 280 135 Z" />
+              <path className="cone" d="M80 210 L60 150 A60 60 0 0 1 125 160 Z" />
+              <circle className="cam" cx="250" cy="200" r="5" />
+              <circle className="cam" cx="80" cy="210" r="5" />
+              <circle className="target" cx="262" cy="78" r="4" />
+              <circle className="target pulse" cx="262" cy="78" r="9" />
+              <circle className="target" cx="70" cy="92" r="4" />
+            </svg>
+          </div>
+          <div className="desk-videos">
+            {['Camera 01', 'Camera 02'].map((cam) => (
+              <div key={cam} className="desk-video">
+                <span>
+                  <i /> {cam}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="desk-stand" />
+    </div>
+  )
+}

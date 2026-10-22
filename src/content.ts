@@ -33,6 +33,7 @@ export const work: Job[] = [
       'Real-time map that tracks cameras and assets as they move.',
       'REST and WebSocket integration, tuned for many simultaneous streams. I run the backend locally and patch it when the integration needs it.',
       'Moved into React for the map-centred web app and a visitor management app for check-in and tracking.',
+      'Backend work in C# and ASP.NET Core, including the audit trail and a hardware service for reading ID documents.',
     ],
   },
   {
@@ -112,6 +113,52 @@ export const projects: Project[] = [
   },
 ]
 
+export type CompanyProject = {
+  platform: string
+  title: string
+  summary: string
+  points: string[]
+  stack: string[]
+}
+
+// Etimad work, described by what it does. Product and client names are left out on purpose.
+export const etimadProjects: CompanyProject[] = [
+  {
+    platform: 'React',
+    title: 'Security operations web client',
+    summary: 'The browser console operators use to watch a site in real time.',
+    points: [
+      'Live map with camera, radar, zone and target layers, including camera field-of-view cones.',
+      'Multi-tile live video with playback, bookmarks and instant replay.',
+      'Device dashboards, filtered device lists and a readable audit history.',
+      'Real-time updates over SignalR, in English and Arabic (RTL).',
+    ],
+    stack: ['React', 'TypeScript', 'MapLibre', 'deck.gl', 'SignalR', 'TanStack Query', 'Zustand'],
+  },
+  {
+    platform: 'C#',
+    title: 'Platform services and an ID document reader',
+    summary: 'Backend features for the same platform, plus a hardware service for reading identity documents.',
+    points: [
+      'Audit trail that turns device and zone changes into plain-language history.',
+      'Camera recording status across video-management channels, and radar target counts for dashboards.',
+      'ASP.NET Core Windows service that reads ID cards, passports (MRZ) and QR codes from desk scanners, with a simulator mode for development.',
+    ],
+    stack: ['C#', 'ASP.NET Core', '.NET Aspire', 'Windows Service'],
+  },
+  {
+    platform: 'Flutter',
+    title: 'Surveillance and monitoring app',
+    summary: 'The original web and iOS client for the platform.',
+    points: [
+      'RTSP camera feeds delivered over WebRTC for low-latency playback.',
+      'Pan, tilt and zoom camera control from the app.',
+      'Real-time map that tracks cameras and assets.',
+    ],
+    stack: ['Flutter', 'WebRTC', 'MapLibre', 'GetX', 'WebSocket'],
+  },
+]
+
 export const studies = [
   { name: 'Crop prediction', note: 'Recommends a crop from soil and climate data' },
   { name: 'Plant disease detection', note: 'Classifies leaf photos by disease' },
@@ -122,9 +169,9 @@ export const studies = [
 
 export const stack: { group: string; items: string[] }[] = [
   { group: 'Mobile', items: ['Flutter', 'Dart', 'GetX', 'Bloc', 'Provider', 'Kotlin', 'Java'] },
-  { group: 'Web', items: ['React', 'TypeScript', 'HTML & CSS'] },
-  { group: 'Real-time', items: ['WebRTC', 'RTSP', 'WebSocket', 'BLE'] },
-  { group: 'Backend', items: ['Django', 'Python', 'PostgreSQL', 'REST', 'GraphQL', 'C#', 'Docker'] },
+  { group: 'Web', items: ['React', 'TypeScript', 'MapLibre', 'deck.gl', 'HTML & CSS'] },
+  { group: 'Real-time', items: ['WebRTC', 'RTSP', 'WebSocket', 'SignalR', 'BLE'] },
+  { group: 'Backend', items: ['C#', 'ASP.NET Core', 'Django', 'Python', 'PostgreSQL', 'REST', 'GraphQL', 'Docker'] },
   { group: 'Design & tools', items: ['Figma', 'Git'] },
 ]
 
